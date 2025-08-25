@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title>URL Shortener</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input[type=text] { width: 400px; padding: 8px; }
+    button { padding: 8px 16px; margin-left: 10px; }
+  </style>
+</head>
+<body>
+<h2>Simple URL Shortener</h2>
+<form method="post" action="/shorten-web">
+  <input type="text" name="originalUrl" placeholder="Enter URL to shorten" required />
+  <button type="submit">Shorten</button>
+</form>
+
+<p th:if="${shortUrl}">
+  Shortened URL: <a th:href="${shortUrl}" th:text="${shortUrl}"></a>
+</p>
+
+<p th:if="${message}">
+  <span th:text="${message}"></span>
+</p>
+</body>
+</html>

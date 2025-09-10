@@ -24,7 +24,6 @@ public class UrlService {
     public Url shortenUrl(String originalUrl) {
         String normalizedUrl = normalizeUrl(originalUrl);
 
-        // Nếu URL đã tồn tại -> trả về luôn
         return repository.findByOriginalUrl(normalizedUrl)
                 .orElseGet(() -> createAndSaveUrl(normalizedUrl));
     }
@@ -56,9 +55,13 @@ public class UrlService {
     }
 
     private String generateShortCode() {
-        return UUID.randomUUID()
-                .toString()
-                .substring(0, 6);
+        String shortCode;
+        do {
+            shortCode = UUID.randomUUID()
+                    .toString()
+                    .substring(0, 8);
+        } while (repository.findByShortCode(shortCode).isPresent());
+        return shortCode;
     }
 
     private String addProtocolIfMissing(String url) {

@@ -1,27 +1,54 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>URL Shortener</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input[type=text] { width: 400px; padding: 8px; }
-    button { padding: 8px 16px; margin-left: 10px; }
-  </style>
+    <title>URL Shortener</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-<h2>Simple URL Shortener</h2>
-<form method="post" action="/shorten-web">
-  <input type="text" name="originalUrl" placeholder="Enter URL to shorten" required />
-  <button type="submit">Shorten</button>
-</form>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Simple URL Shortener</h2>
+            <form method="post" action="/shorten">
+                <div class="input-group mb-3">
+                    <input type="text" name="originalUrl" class="form-control" placeholder="Enter URL to shorten" required/>
+                    <button type="submit" class="btn btn-primary">Shorten</button>
+                </div>
+            </form>
 
-<p th:if="${shortUrl}">
-  Shortened URL: <a th:href="${shortUrl}" th:text="${shortUrl}"></a>
-</p>
+            <div th:if="${shortUrl}" class="alert alert-success mt-4">
+                <span>Shortened URL:</span>
+                <div class="input-group">
+                    <input type="text" id="shortUrl" class="form-control" th:value="${shortUrl}" readonly>
+                    <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">Copy</button>
+                </div>
+            </div>
 
-<p th:if="${message}">
-  <span th:text="${message}"></span>
-</p>
+            <div th:if="${message}" class="alert alert-danger mt-4">
+                <span th:text="${message}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("shortUrl");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); 
+        document.execCommand("copy");
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
 </body>
 </html>

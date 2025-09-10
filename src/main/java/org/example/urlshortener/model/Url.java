@@ -25,5 +25,19 @@ public class Url {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    public String getOriginalUrl() {
+        return originalUrl;
+    }
 
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
+    }
+
+    public String getShortCode() {
+        return shortCode;
+    }
+
+    public void setShortCode(String shortCode) {
+        this.shortCode = shortCode;
+    }
 }
